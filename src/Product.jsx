@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { cartAdd } from "./store/slice/cartSlice";
 
 export default function Product() {
   const [product, setProduct] = useState([]);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -17,6 +20,10 @@ export default function Product() {
     fetchData();
   }, []);
   console.log(product);
+
+  const handleAdd = (productId) => {
+    dispatch(cartAdd(productId));
+  };
 
   return (
     <main>
@@ -35,9 +42,15 @@ export default function Product() {
                       <h5 className="card-title">{item.title}</h5>
                       <h5 className="card-price">Price: ${item.price}</h5>
                       <p className="card-text">{item.description.slice(0, 80)}</p>
-                      <Link to="/" className="btn btn-info">
-                        Go somewhere
-                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleAdd(item);
+                        }}
+                        className="btn btn-info"
+                      >
+                        Add to Cart
+                      </button>
                     </div>
                   </div>
                 </div>

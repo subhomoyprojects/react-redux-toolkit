@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Header() {
-  const [product, setProduct] = useState();
+  const selector = useSelector((state) => state.cart);
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-info">
@@ -24,6 +24,7 @@ export default function Header() {
                 <Link className="nav-link active" aria-current="page" to="/cart">
                   Cart
                 </Link>
+                <span className="cartCount">{selector.length}</span>
               </li>
             </ul>
           </div>
